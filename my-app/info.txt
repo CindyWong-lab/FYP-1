@@ -1,0 +1,114 @@
+
+Problem Statement 
+In modern software development, database schemas frequently change as applications evolve. Managing these changes across multiple environments such as development, staging, and production is often done manually, which increases the risk of inconsistencies, version conflicts, and deployment errors. 
+Many teams lack a centralized system to compare schemas, track versions, generate controlled migration scripts, and validate performance before deployment. As a result, schema synchronization becomes time-consuming, error-prone, and difficult to audit. 
+Therefore, there is a need for an integrated database schema version control and comparison system that enables safe change management, automated difference detection, structured migration control, and performance monitoring within a unified interface. 
+ 
+Project Description  
+This project aims to develop a database schema comparison and version control system with a graphical user interface (UI). The system allows users to register database connections and select schemas from one or more databases for comparison, including different environments such as staging and production.  
+The system compares schemas to identify structural differences, such as tables, columns, indexes, and relationships. When schema version information is available, it is used to track changes; otherwise, the system relies on structural comparison. Based on detected differences, the system automatically manages schema versions and generates SQL scripts that users can review and approve.  
+Approved scripts are saved as versioned files and stored in a Git repository. The project focuses on safe, user-controlled database schema management and introduces students to practical concepts used in real-world software development.  
+  
+
+Features  
+
+Feature 
+Description 
+Role-based Access Control 
+Login using Microsoft. 
+ 
+Role-based connection access – execution permission control (read-only, deployment roles). 
+UI Entry for Database Connection 
+Users can enter and manage database connection strings, test connections, and validate host/port automatically. 
+ 
+Ability to support multiple types of databases (primary PostgreSQL). 
+Schema Selection Across Environments 
+Users can select schemas from any registered database (staging, production, or same environment).  
+ 
+Allow multi-select for batch comparison (i.e., dev vs. staging vs. prod). 
+Schema/Data Comparison Engine 
+Compare two or more selected schemas and detect differences in tables, columns, indexes, foreign keys, and constraints.  
+ 
+Save comparison templates, highlight critical differences, and show historical comparison changes. 
+ 
+Compare all or selected table data (row counts, sample mismatched rows). 
+Version Table Detection 
+Detect if a schema contains a version control table. 
+ 
+Determine Newer Schema: If both schemas have version information, identify which schema is newer. 
+Fallback Structural Comparison: If no version table exists, rely purely on structural comparison. 
+ 
+Show a timeline of schema versions, indicate which changes are additive or breaking (using script_patch). 
+Comprehensive Difference Reporting 
+Show what is missing from each schema (A vs B and B vs A, or multiple schemas).  
+ 
+Highlight critical or minor changes to help prioritize updates. 
+ 
+Use of AI for this feature is highly desirable. 
+ 
+SQL Script Generation 
+Generate SQL scripts to synchronize schema differences. 
+	1	Automatically increment version number based on type of change (Major = breaking, Minor = additive, Patch = small change) x.y.z 
+	2	Users must approve or edit generated scripts before saving. 
+	3	Accepted scripts are saved as versioned migration files. 
+	4	Include change logs with user notes (or auto generated). 
+	5	Generate rollback scripts alongside migration scripts. 
+	6	Track SQL execution history for auditing. 
+	7	Automatically push approved scripts to GitHub. 
+Use of AI for this feature is highly desirable. 
+Query Execution Analysis 
+	1	Allow users to input a SELECT query for analysis. 
+	2	Retrieve and display the database execution plan (such as EXPLAIN). 
+	3	Provide simplified explanation of the execution plan in readable format. 
+	4	Detect common SQL anti-patterns (including SELECT *, missing WHERE clauses, excessive joins, unnecessary DISTINCT).  
+	5	Store query history for review and comparison. 
+	6	Visualize execution plans graphically. 
+	7	Highlight expensive operations. 
+ 
+Use of AI for this feature is highly desirable. 
+Performance Suggestion 
+	1	Suggest possible indexes when sequential scans are detected on large tables. 
+	2	Detect unused indexes. 
+	3	Suggest composite indexes based on query and table usage patterns. 
+	4	Recommend partitioning strategies for large tables. 
+	5	Generate SQL scripts for recommended performance optimizations. 
+ 
+Use of AI for this feature is highly desirable. 
+ 
+Performance Monitoring 
+	1	Table/Database Health Metrics using system catalog and statistical views. 
+	2	Long-Running Query Detection 
+	3	Query Performance Scoring 
+	4	Historical Query Monitoring (query, exec_time, rows_returned, capture_time) 
+	5	Provide dashboards with trend charts for performance metrics. 
+	6	Allow custom alert thresholds for performance issues. 
+	7	Compare historical performance with current database performance. 
+ 
+Use of AI for this feature is highly desirable. 
+ 
+Migration Version Validation & Deployment 
+	1	Validate database state and migration versions before execution.  
+	2	If no schema or tables exist, prompt to run /scripts_init. 
+	3	After initialization, prompt whether to run /scripts_patch.  
+	4	Detect pending scripts based on the current database version (e.g., DB at v5.0.0; scripts_patch contains v5.0.1, v5.0.2, v6.0.0). 
+	5	Allow users to select or deselect which pending scripts to run before execution. 
+	6	Allow execution of approved scripts into the database.  
+	7	Show deployment preview before execution.  
+	8	Maintain migration history and support rollback to previous version. 
+	9	Apply scripts only to target databases by reading application_name from ApplicationTable; some scripts may be restricted to specific applications. 
+ 
+Use of AI for this feature is highly desirable. 
+
+
+
+
+
+   A) Requirements:​
+	1	Framework: NextJS (https://nextjs.org/) ​
+	2	Database: PostgreSQL with Sequelize (https://sequelize.org/docs/v6/category/core-concepts )  ORM (Server-side Execution)​
+	3	Authentication: Microsoft Account (OAuth) Integration with NextAuth (https://next-auth.js.org/) ​
+	4	Communication: HTTP Fetch or Axios with clear UI and API separation​
+	5	Styling: TailwindCSS (desirable) or standard CSS (https://tailwindcss.com/)​
+	6	Deployment: Containerized via Docker (https://www.docker.com/)​
+Tip: If you’re not familiar with postgres CLI (psql), use pgAdmin as the GUI to help you.
+ 
